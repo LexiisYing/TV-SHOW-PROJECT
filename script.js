@@ -19,6 +19,13 @@ function makeSeasonAndEpisode(episode) {
 function makePageForEpisodes(allEpisodes) {
   const rootElem = document.getElementById("root");
   
+  // clear out the rootElemrnt's HTML before adding more stuff
+  rootElem.innerHTML = "";
+
+  const countParagraph = document.createElement("p");
+  countParagraph.innerText = `Showing ${allEpisodes.length} episodes`;
+  rootElem.appendChild(countParagraph);
+  
     allEpisodes.forEach((episode) => {
       const paragraph = document.createElement("p");
       paragraph.textContent = `${makeSeasonAndEpisode(episode)}:
@@ -35,6 +42,21 @@ function makePageForEpisodes(allEpisodes) {
     });
 
 }
+
+const searchInput = document.getElementById("search-input");
+searchInput.addEventListener("input", (event) => {
+  const searchString = event.target.value.toLowerCase();
+  const filteredEpisode = getAllEpisodes().filter((episode) => {
+    if (episode.summary.toLowerCase().includes(searchString)) {
+      return true;
+    }
+    if (episode.name.toLowerCase().includes(searchString)) {
+      return true;
+    }
+    return false;
+  });
+  makePageForEpisodes(filteredEpisode);
+})
 
 
 window.onload = setup;
