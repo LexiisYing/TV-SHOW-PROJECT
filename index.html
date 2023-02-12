@@ -9,9 +9,17 @@
   </head>
 
   <body>
+
+    <label> Choose an episode:</label>
+        <select id="drop-menu">
+          <option value="" selected>Show All Episodes </option>
+        </select>
+<br>
+<br>
     <input id="search-input" type="text" placeholder="Search for an episode">
     <div id="root">
     </div>
+
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
@@ -19,5 +27,7 @@
     <footer>All data comes from <a href="https://tvmaze.com/" target="_blank"> TV Maze.</a></footer>
     <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
+    <script src="shows.js"></script>
+
   </body>
 </html>

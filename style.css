@@ -1,12 +1,5 @@
 #root {
   color: black;
-  /* display: flex;
-  flex-wrap: wrap; */
-  display: block;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
 }
-img {
-  display: block;
-  padding: 1%;
-  margin: 1%;
-}
-
