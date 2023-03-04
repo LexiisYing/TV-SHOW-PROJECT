@@ -4,7 +4,7 @@
 //   makePageForEpisodes(allEpisodes);
 // }
 
-const allShows = getAllShows();
+//const allShows = getAllShows();
 
 
 const rootElem = document.getElementById("root");
