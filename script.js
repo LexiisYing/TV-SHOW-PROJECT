@@ -11,7 +11,7 @@ const rootElem = document.getElementById("root");
 async function setup() {
   try {
     const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
-  let result = await response.json();
+    let result = await response.json();
     makePageForEpisodes(result);
     episodeSelector(result);
     searchItem(result);
@@ -53,9 +53,10 @@ function makePageForEpisodes(allEpisodes) {
       image.src = episode.image.medium;
       rootElem.appendChild(image);
       
-      rootElem.innerHTML += episode.summary;
-
-
+      const summaryParagraph = document.createElement("p");
+      summaryParagraph.innerHTML = episode.summary;
+      rootElem.appendChild(summaryParagraph);
+      
     });
 
 }
@@ -80,27 +81,23 @@ window.onload = setup;
 
 const selectElement = document.getElementById("drop-menu");
 const allEpisodes = getAllEpisodes();
-for (let increment = 0; increment < allEpisodes.length; increment++) {
-  let movieOption = document.createElement("option");
-  const nameOfSeason = allEpisodes[increment].season;
-  const episodeNumber = allEpisodes[increment].number;
-  if (episodeNumber < 10) {
-    const episodeCodeDiv = `S0${nameOfSeason}E0${episodeNumber}`;
-    movieOption.value = allEpisodes[increment].name;
-    movieOption.text = episodeCodeDiv + " - " + allEpisodes[increment].name;
-  } else if (episodeNumber >= 10) {
-    const episodeCodeDiv = `S0${nameOfSeason}E${episodeNumber}`;
-    movieOption.value = allEpisodes[increment].name;
-    movieOption.text = episodeCodeDiv + " - " + allEpisodes[increment].name;
-  }
+for (let i = 0; i < allEpisodes.length; i++) {
+  const episode = allEpisodes[i];
+  const { season, number, name } = episode;
+  const episodeCode = makeSeasonAndEpisode(episode);
+  const optionText = `${episodeCode} - ${name}`;
+
+  const movieOption = document.createElement("option");
+  movieOption.value = name;
+  movieOption.textContent = optionText;
+
   selectElement.appendChild(movieOption);
 }
 
 selectElement.addEventListener("change", (event) => {
-  const keyValue = event.target.value;
-  console.log(keyValue);
-  const filteredEpisode = allEpisodes.filter((episode) => {
-    return episode.name === keyValue;
-  })
-  makePageForEpisodes(filteredEpisode);
+  const selectedEpisodeName = event.target.value;
+  const filteredEpisodes = allEpisodes.filter(
+    (episode) => episode.name === selectedEpisodeName
+  );
+  makePageForEpisodes(filteredEpisodes);
 });
